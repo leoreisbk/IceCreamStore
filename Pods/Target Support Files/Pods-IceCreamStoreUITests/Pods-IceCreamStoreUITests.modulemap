@@ -1,0 +1,6 @@
+framework module Pods_IceCreamStoreUITests {
+  umbrella header "Pods-IceCreamStoreUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
