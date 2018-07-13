@@ -20,7 +20,7 @@ class IceCreamStoreInterector: PresentorToInterectorProtocol {
 	var presenter: InterectorToPresenterProtocol?
 	
 	func fetchIceCreamItems() {
-		reference.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
+		reference.queryOrdered(byChild: DataBaseManager.IceCreamQueryName).observe(.value, with: { snapshot in
 			var newItems: [IceCreamItem] = []
 			for child in snapshot.children {
 				if let snapshot = child as? DataSnapshot,

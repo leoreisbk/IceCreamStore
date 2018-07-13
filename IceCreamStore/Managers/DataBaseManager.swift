@@ -10,4 +10,5 @@ import UIKit
 
 class DataBaseManager: NSObject {
 	static let IceCreamDatabasePath = "icecream-items"
+	static let IceCreamQueryName = "name"
 }
