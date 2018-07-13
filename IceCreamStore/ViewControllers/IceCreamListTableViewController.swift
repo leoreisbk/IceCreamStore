@@ -7,33 +7,26 @@
 //
 
 import UIKit
-import Firebase
+
+protocol PresenterToViewProtocol: class {
+	func showIceCreamList(iceCreamItems: [IceCreamItem])
+	func showError();
+}
 
 class IceCreamListTableViewController: UIViewController {
-	var items: [IceCreamItem] = []
-	var ref: DatabaseReference!
-
-	@IBOutlet weak var tableView: UITableView! {
+	var items: [IceCreamItem] = [] {
 		didSet {
 			self.tableView.reloadData()
 		}
 	}
+	
+	var presenter: ViewToPresenterProtocol?
+
+	@IBOutlet weak var tableView: UITableView!
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		ref = Database.database().reference(withPath: DataBaseManager.IceCreamDatabasePath)
-		ref.queryOrdered(byChild: "name").observe(.value, with: { snapshot in
-			var newItems: [IceCreamItem] = []
-			for child in snapshot.children {
-				if let snapshot = child as? DataSnapshot,
-					let icecreamItem = IceCreamItem(snapshot: snapshot) {
-					newItems.append(icecreamItem)
-				}
-			}
-
-			self.items = newItems
-			self.tableView.reloadData()
-		})
+		self.presenter?.reloadData()
 	}
 
 	override func viewDidLoad() {
@@ -53,5 +46,19 @@ extension IceCreamListTableViewController: UITableViewDataSource, UITableViewDel
 		let icecreamItem = items[indexPath.row]
 		cell.setupCell(icecreamItem)
 		return cell
+	}
+}
+
+ // MARK: Protocols
+
+extension IceCreamListTableViewController: PresenterToViewProtocol {
+	func showIceCreamList(iceCreamItems: [IceCreamItem]) {
+		self.items = iceCreamItems
+	}
+	
+	func showError() {
+		let alert = UIAlertController(title: "Alert", message: "Problem Fetching Ice Creams", preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+		self.present(alert, animated: true, completion: nil)
 	}
 }
