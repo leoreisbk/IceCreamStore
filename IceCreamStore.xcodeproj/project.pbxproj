@@ -128,7 +128,6 @@
 		1F807A0220EFA44C0050B8DE /* IceCreamStore */ = {
 			isa = PBXGroup;
 			children = (
-				1FB0EF3C20F8F67000377C68 /* Protocol */,
 				1F807A0320EFA44C0050B8DE /* AppDelegate.swift */,
 				1FB0EF3920F8F5C100377C68 /* Presenter */,
 				1FB0EF3620F8F30300377C68 /* Interector */,
@@ -226,13 +225,6 @@
 				1FB0EF3A20F8F5DF00377C68 /* IceCreamStorePresenter.swift */,
 			);
 			path = Presenter;
-			sourceTree = "<group>";
-		};
-		1FB0EF3C20F8F67000377C68 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		7828F58E22777FA09AA4274D /* Frameworks */ = {
