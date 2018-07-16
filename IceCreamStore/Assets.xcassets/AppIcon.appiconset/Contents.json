@@ -11,9 +11,8 @@
       "scale" : "3x"
     },
     {
-      "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ic_store_58.gif",
+      "size" : "29x29",
       "scale" : "2x"
     },
     {
@@ -32,15 +31,13 @@
       "scale" : "3x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ic_store_120.gif",
+      "size" : "60x60",
       "scale" : "2x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ic_store_180.gif",
+      "size" : "60x60",
       "scale" : "3x"
     },
     {
