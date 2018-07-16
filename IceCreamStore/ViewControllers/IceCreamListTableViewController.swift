@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDStateTableView
 
 protocol PresenterToViewProtocol: class {
 	func showIceCreamList(iceCreamItems: [IceCreamItem])
@@ -22,10 +23,11 @@ class IceCreamListTableViewController: UIViewController {
 	
 	var presenter: ViewToPresenterProtocol?
 
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var tableView: SDStateTableView!
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+//		tableView.setState(.loading(message: "Loading data..."))
 		self.presenter?.reloadData()
 	}
 
@@ -39,9 +41,16 @@ class IceCreamListTableViewController: UIViewController {
 
 extension IceCreamListTableViewController: UITableViewDataSource, UITableViewDelegate {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return items.count
+		switch (tableView as! SDStateTableView).currentState {
+		case .dataAvailable:
+			tableView.separatorStyle = .singleLine
+			return items.count
+		default:
+			tableView.separatorStyle = .none
+			return 0
+		}
 	}
-
+	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "IceCreamCell", for: indexPath) as! IceCreamTableViewCell
 		let icecreamItem = items[indexPath.row]
@@ -55,11 +64,18 @@ extension IceCreamListTableViewController: UITableViewDataSource, UITableViewDel
 extension IceCreamListTableViewController: PresenterToViewProtocol {
 	func showIceCreamList(iceCreamItems: [IceCreamItem]) {
 		self.items = iceCreamItems
+		if self.items.count > 0 {
+			tableView.setState(.dataAvailable)
+		} else {
+			tableView.setState(.withImage(image: "empty_cart",
+										  title: "EMPTY STORE",
+										  message: "Please create an item in your factory first"))
+		}
 	}
 	
 	func showError() {
-		let alert = UIAlertController(title: "Alert", message: "Problem Fetching Ice Creams", preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
-		self.present(alert, animated: true, completion: nil)
+		tableView.setState(.withImage(image: "server_error",
+									  title: "SERVER ERROR",
+									  message: "We are notified and working on it, we will be back soon"))
 	}
 }

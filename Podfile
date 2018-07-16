@@ -9,6 +9,7 @@ target 'IceCreamStore' do
 
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
+	pod 'SDStateTableView'
 
   target 'IceCreamStoreTests' do
     inherit! :search_paths
